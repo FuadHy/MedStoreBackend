@@ -1,0 +1,44 @@
+{
+	"name": "server",
+	"version": "1.0.0",
+	"description": "node.js REST API server for MedStore.et web-application.",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"install-client": "cd client && npm install",
+		"build-client": "cd client && npm run build",
+		"heroku-postbuildLater": "npm run install-client && npm run build-client",
+		"dev": "nodemon index.js",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"debug": "ndb index.js"
+	},
+	"author": "Eyoel Wendwosen",
+	"license": "ISC",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"bluebird": "^3.7.2",
+		"body-parser": "^1.19.0",
+		"compression": "^1.7.4",
+		"cookie-parser": "^1.4.5",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-mongo-sanitize": "^2.0.2",
+		"formidable": "^1.2.2",
+		"helmet": "^4.3.1",
+		"hpp": "^0.2.3",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.10.7",
+		"morgan": "^1.10.0",
+		"multer": "^1.4.2",
+		"mysql2": "^2.2.5",
+		"nodemailer": "^6.4.17",
+		"sequelize": "^6.5.0",
+		"sharp": "^0.27.0",
+		"slugify": "^1.4.6",
+		"validator": "^13.5.2",
+		"xss-clean": "^0.1.1"
+	},
+	"engines": {
+		"node": "12.x"
+	}
+}

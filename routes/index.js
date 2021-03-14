@@ -1,0 +1,27 @@
+const express = require('express')
+const config = require('../config.js')
+const userRoutes = require('./user.routes.js')
+const productRoutes = require('./product.routes.js')
+const fileUploadRoutes = require('./fileUpload.routes.js')
+const categoryRoutes = require('./category.routes')
+const subCategoryRoutes = require('./subCategory.routes')
+const requestRoutes = require('./request.routes')
+const messageRoutes = require('./message.routes')
+// const reviewRoutes = require('./review.routes')
+const favoriteRoutes = require('./favorite.routes')
+const searchRoutes = require('./search.routes')
+
+const routes = express.Router()
+
+routes.use(config.urls.uploads, fileUploadRoutes)
+routes.use(config.urls.user, userRoutes)
+routes.use(config.urls.product, productRoutes)
+routes.use(config.urls.category, categoryRoutes)
+routes.use(config.urls.subCategory, subCategoryRoutes)
+routes.use(config.urls.request, requestRoutes)
+routes.use(config.urls.message, messageRoutes)
+// routes.use(config.urls.review, reviewRoutes)
+routes.use(config.urls.favorite, favoriteRoutes)
+routes.use(config.urls.search, searchRoutes)
+
+module.exports = routes

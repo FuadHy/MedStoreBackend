@@ -1,0 +1,147 @@
+--learn more links on front page are not working
+-- meet our team has a duplication(cherinet Mekuanint)
+
+-- compare & buy do not perform its intended function
+
+-- while trying to search for a product it doesn't work
+
+-- catagories  drop dowm buttons and links are not working
+
+
+tasks
+
+add a catagory name in the product compare page just below the search bar
+work on the static photo to be a photo of the the real product
+add the product image on the product detail page
+work on the reques information(modal form)
+work on the search bar
+user authentication(both on the normal site and admin da )
+
+admin page
+show progress on uploding
+
+
+
+user and company difference
+difference bn categories and subCategories
+getProductsByCategoryName (what about the subCategories parts then????)
+while on product detail page, it will raise an error when refreshing the page
+
+
+
+make a new model for requests
+
+
+user signup
+endpoint: (POST)localhost:8080/api/v1/user/signup
+required fields: "name": " ",
+                "email": "",
+                "phone": "",
+                "password":"",
+                "passwordConfirm": "",
+no additional information is saved during signup
+response: token
+
+---user login
+endpoint: (POST)localhost:8080/api/v1/user/login
+required fields: email and password
+response: token
+
+---forgot password
+endpoint:(POST) localhost:8080/api/v1/user/forgotpassword
+required fields: email
+
+---resetPassword
+endpoint:(PATCH) localhost:8080/api/v1/user/resetPassword/:token
+required fields: password and confirmPassword
+response: token
+
+---updatepassword
+endpoint:(PATCH) localhost:8080/api/v1/user/updateMyPassword/:token
+required fields: currentPassword, newPassword and confirmNewPassword
+response: token
+
+all the neccessary user endpoints need authorization therefore you must save jwt token  
+adding, updating, and deleting product also need authorization
+
+--------requests route ------------
+--- get all requests
+endpoint: (GET) localhost:8080/api/v1/requests
+
+--- create new requests
+endpoint: (POST) localhost:8080/api/v1/requests
+required fields: request body
+
+--- get a request
+endpoint: (GET) localhost:8080/api/v1/requests/:request_id
+
+--- update a request
+endpoint: (PATCH) localhost:8080/api/v1/requests/:request_id
+required fields: fields to be updated
+
+--- delete a request
+endpoint: (GET) localhost:8080/api/v1/requests/:request_id
+
+------------nested route for request ---------------
+--- get requests by product id
+endpoint: (GET) localhost:8080/api/v1/product/:product_id/request
+
+
+routes for favorite and review
+
+
+
+
+
+all put requests are made to be patch requests
+
+// modification to previously implemented route
+---get rating by product id
+previous: GET /product/rating/:productID
+new: GET /product/:productID/rating
+
+---get product by category id
+previous:GET /product/category/catagoryID
+new: GET /category/catagoryID/product
+
+---rating product
+previous: PUT /user/rate/:user_id
+new: PATCH /product/:productID/rating
+required field: rating, review
+
+---adding favorite product
+previous: PUT /user/favorite/:user_id
+new: PATCH /user/:userID/favorite????
+
+
+any Model with attribute of array is changed to string
+
+
+POST http://localhost:3001/api/v1/user/signup
+Content-Type: application/x-www-form-urlencoded
+POST_BODY:
+name=fuad&email=fuad@gmail.com&phone=0965678183&password=104669&passwordConfirm=104669
+
+POST http://localhost:3001/api/v1/user/login
+Content-Type: application/x-www-form-urlencoded
+POST_BODY:
+email=fuad@gmail.com&password=104669
+
+POST http://localhost:3001/api/v1/user/profile
+Content-Type: application/x-www-form-urlencoded
+POST_BODY:
+token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxYjM0ZDZjLTIzNTEtNDcyYy1iMmRjLWRlMzJlMDE0ODJiYyIsImlhdCI6MTYxNTIyMDg3NCwiZXhwIjoxNjIyOTk2ODc0fQ.Aj0Qqg0ovTeU8RhRXeFFmSLQNnlGgV4pMPnuTezbR7E
+
+POST http://localhost:3001/api/v1/favorite
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxYjM0ZDZjLTIzNTEtNDcyYy1iMmRjLWRlMzJlMDE0ODJiYyIsImlhdCI6MTYxNTQ3MzA2MSwiZXhwIjoxNjIzMjQ5MDYxfQ.pVQtz_J7Xu8YvPWLCMJnlRn5_9BKM1ZoST7RmbQZL_8
+POST_BODY:
+product=295ba208-28c8-4d2b-992b-e3b665cadbb3
+
+http://localhost:3001/api/v1/favorite
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxYjM0ZDZjLTIzNTEtNDcyYy1iMmRjLWRlMzJlMDE0ODJiYyIsImlhdCI6MTYxNTQ3MzA2MSwiZXhwIjoxNjIzMjQ5MDYxfQ.pVQtz_J7Xu8YvPWLCMJnlRn5_9BKM1ZoST7RmbQZL_8
+
+DELETE http://localhost:3001/api/v1/favorite/a94a245b-88d7-4dab-bd61-c3b84e4f51c4
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxYjM0ZDZjLTIzNTEtNDcyYy1iMmRjLWRlMzJlMDE0ODJiYyIsImlhdCI6MTYxNTQ3MzA2MSwiZXhwIjoxNjIzMjQ5MDYxfQ.pVQtz_J7Xu8YvPWLCMJnlRn5_9BKM1ZoST7RmbQZL_8

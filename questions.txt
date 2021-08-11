@@ -145,3 +145,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxYjM0ZDZjL
 DELETE http://localhost:3001/api/v1/favorite/a94a245b-88d7-4dab-bd61-c3b84e4f51c4
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUxYjM0ZDZjLTIzNTEtNDcyYy1iMmRjLWRlMzJlMDE0ODJiYyIsImlhdCI6MTYxNTQ3MzA2MSwiZXhwIjoxNjIzMjQ5MDYxfQ.pVQtz_J7Xu8YvPWLCMJnlRn5_9BKM1ZoST7RmbQZL_8
+
+http://localhost:3001/api/v1/product/recent

@@ -45,17 +45,18 @@ app.use(function (req, res, next) {
 	res.setHeader('Authorization', '*')
 	res.setHeader('Access-Control-Allow-Credentials', true)
 	if (req.method === 'OPTIONS') {
+		console.log('gottti')
 		res.sendStatus(200)
 	} else {
 		next()
 	}
 })
 
-// set security HTTP header
+// set security HTTP header http://localhost:3001/ll/img/uploads/ad1.jpg
 app.use(helmet())
 
 // body parser
-app.use('/', express.static(`${__dirname}/public`))
+app.use('/uploads', express.static(`${__dirname}/public`))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 

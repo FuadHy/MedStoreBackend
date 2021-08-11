@@ -3,6 +3,7 @@ const factory = require('./handleFactory')
 // const catchAsync = require('./../utils/catchAsync');
 
 exports.getAllProduct = factory.getAll(Product)
+exports.getRecentProduct = factory.getRecent(Product)
 exports.getProduct = factory.getOne(Product)
 exports.createProduct = factory.createOne(Product)
 exports.updateProduct = factory.updateOne(Product)

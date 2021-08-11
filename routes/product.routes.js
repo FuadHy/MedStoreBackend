@@ -16,6 +16,7 @@ productRouter
 	.get(productController.getAllProduct)
 	// .post(authController.protect,authController.restrictTo('admin'),productController.createProduct);
 	.post(productController.createProduct)
+productRouter.route('/recent').get(productController.getRecentProduct)
 
 productRouter
 	.route('/:id')

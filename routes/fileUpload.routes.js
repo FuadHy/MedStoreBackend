@@ -9,4 +9,7 @@ uploadRoutes.route('/')
     .get(fileUploadService.uploadForm)
     .post(fileUploadService.uploadFile);
 
+uploadRoutes.route('/pdf')
+	.post(fileUploadService.uploadPDF)
+
 module.exports = uploadRoutes;

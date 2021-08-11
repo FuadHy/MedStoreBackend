@@ -22,7 +22,7 @@ class APIFeatures {
 		this.option.order = []
 		if (this.queryString.sort) {
 			let sortBy = this.queryString.sort.split(',')
-			sortBy.forEach(s => this.option.order.push([s, 'ASC']))
+			sortBy.forEach(s => this.option.order.push([s, 'DESC']))
 		} else {
 			this.option.order.push(['createdAt', 'ASC'])
 		}

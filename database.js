@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes, STRING, NUMBER } = require('sequelize')
 
-const sequelize = new Sequelize('medStoreET', 'medstoreet_biruk', 'uL)pjb9zKU!(', { dialect: 'mysql' })
+const sequelize = new Sequelize('medstoreet', 'root', '', { dialect: 'mysql' })
 // const sequelize = new Sequelize('medstoreet_database', 'medstoreet_biruk', 'uL)pjb9zKU!(', {
 // 	dialect: 'mysql',
 // })

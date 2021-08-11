@@ -29,6 +29,7 @@ exports.updateOne = (Model, ...arrayProperties) => {
 			return next(new AppError('No document found with that ID', 404))
 		}
 		for (key in req.body) {
+			console.log('ooo')
 			updated[key] = req.body[key]
 			console.log(req.body[key])
 		}
@@ -67,6 +68,22 @@ exports.updateOne = (Model, ...arrayProperties) => {
 
 exports.createOne = Model =>
 	catchAsync(async (req, res, next) => {
+		token = null
+		if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+				token = req.headers.authorization.split(' ')[1]
+		}
+
+		if(helperFunctions.resourceNeeded(req.baseUrl) == 'request'){
+			if(token){
+				console.log('yayyyy')
+				await jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+					if (!err){
+						req.body.user = user.id
+					}
+				})
+			}
+		}
+
 		let doc = await Model.create(req.body)
 		if (helperFunctions.resourceNeeded(req.baseUrl) == 'product') {
 			let category = await doc.getCategory()
@@ -92,6 +109,7 @@ exports.createOne = Model =>
 			})
 			return
 		}
+
 		doc = JSON.parse(JSON.stringify(doc))
 		res.status(201).json({
 			status: 'success',
@@ -106,6 +124,7 @@ exports.getOne = (Model, popOptions) =>
 			option.include = Category
 		} else if (helperFunctions.resourceNeeded(req.baseUrl) == 'product') {
 			option.include = [Category, SubCategory]
+			option.fav = true
 		} else if (helperFunctions.resourceNeeded(req.baseUrl) == 'request') {
 			option.include = [User, Product]
 			// option.include = Product
@@ -114,6 +133,60 @@ exports.getOne = (Model, popOptions) =>
 		if (!doc) {
 			return next(new AppError('No document found with that ID', 404))
 		}
+		if (option.fav){
+			if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+					token = req.headers.authorization.split(' ')[1]
+					if(token){
+						console.log('yayyyy')
+						await jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+							if (!err){
+								let vUser = await User.findOne({where:{_id:user.id}})
+								if (vUser){
+									let isFav = await Favorite.findOne({where:{product:doc._id, user:vUser._id}})
+									doc.dataValues.faved = isFav && isFav._id
+								}
+
+							}
+						})
+					}
+			}
+		}
+		console.log(doc)
+		doc = JSON.parse(JSON.stringify(doc))
+		res.status(200).json({
+			status: 'success',
+			data: doc,
+		})
+	})
+
+exports.getRecent = (Model, popOptions) =>
+	catchAsync(async (req, res, next) => {
+		let option = {
+		}
+		console.log('pppppp')
+		req.query.sort = 'createdAt'
+		let features = new APIFeatures(option, req.query).filter().sort().limitFields().paginate()
+		let doc = await Model.findAll(features.option)
+		if (!doc) {
+			return next(new AppError('No document found with that ID', 404))
+		}
+		if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+				token = req.headers.authorization.split(' ')[1]
+				if(token){
+					await jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+						if (!err){
+							let vUser = await User.findOne({where:{_id:user.id}})
+							if (vUser){
+								let isFav = await Favorite.findOne({where:{product:doc._id, user:vUser._id}})
+								doc.dataValues.faved = isFav && isFav._id
+							}
+
+						}
+					})
+				}
+		}
+		doc = doc.slice(0, 20)
+		console.log(doc)
 		doc = JSON.parse(JSON.stringify(doc))
 		res.status(200).json({
 			status: 'success',
@@ -145,29 +218,32 @@ exports.getAll = (Model, popOptions) =>
 
 		let features = new APIFeatures(option, req.query).filter().sort().limitFields().paginate()
 		let resp = [], doc = await Model.findAll(features.option)
+		console.log(doc)
 
 		if (option.itHasPath){
-			resp[0] = doc[0].Category.name;
-			resp[1] =  doc[0].SubCategory.name;
-			let token
-			if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-				token = req.headers.authorization.split(' ')[1]
-				if(token){
-					await jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
-						if (!err){
-							let vUser = await User.findOne({where:{_id:user.id}})
-							if (vUser){
-								doc = await Promise.all(doc.map(async pr => {
-									let isFav = await Favorite.findOne({where:{product:pr._id, user:vUser._id}})
-									
-									if(isFav){
-										pr.dataValues.faved = isFav._id
-										return pr;
-									} else return pr;
-								}))
+			if (doc.length){	
+				resp[0] = doc[0].Category.name;
+				resp[1] =  doc[0].SubCategory.name;
+				let token
+				if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+					token = req.headers.authorization.split(' ')[1]
+					if(token){
+						await jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+							if (!err){
+								let vUser = await User.findOne({where:{_id:user.id}})
+								if (vUser){
+									doc = await Promise.all(doc.map(async pr => {
+										let isFav = await Favorite.findOne({where:{product:pr._id, user:vUser._id}})
+										
+										if(isFav){
+											pr.dataValues.faved = isFav._id
+											return pr;
+										} else return pr;
+									}))
+								}
 							}
-						}
-					})
+						})
+					}
 				}
 			}
 		}
@@ -179,8 +255,10 @@ exports.getAll = (Model, popOptions) =>
 				}
 			})
 		}
+		console.log(req.headers.authorization)
 		
 		doc = JSON.parse(JSON.stringify(doc))
+		console.log(doc)
 		// SEND RESPONSE
 		res.status(200).json({
 			status: 'success',

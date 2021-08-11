@@ -1,0 +1,88 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 10.180.50.214:3306
+-- Generation Time: Mar 17, 2021 at 10:32 AM
+-- Server version: 5.5.62
+-- PHP Version: 7.1.14
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `ethiobot_`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `userid` int(50) NOT NULL,
+  `lang` varchar(50) NOT NULL,
+  `token` text NOT NULL,
+  `state` varchar(50) NOT NULL DEFAULT 'init',
+  `phone` varchar(50) NOT NULL,
+  `email` text NOT NULL,
+  `first_name` text NOT NULL,
+  `last_name` text NOT NULL,
+  `pass` text NOT NULL,
+  `vouphone` varchar(15) NOT NULL,
+  `offrid` varchar(50) NOT NULL,
+  `userphone` varchar(50) NOT NULL,
+  `code` int(10) NOT NULL,
+  `username` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `userid`, `lang`, `token`, `state`, `phone`, `email`, `first_name`, `last_name`, `pass`, `vouphone`, `offrid`, `userphone`, `code`, `username`) VALUES
+(3, 388952247, 'en', 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTY4NjQ1ODUsInVzZXJfbmFtZSI6Ijk0NjM2ODM3NSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUl9JTkZPX1VQREFURSIsIlJPTEVfUkVDSEFSR0UiLCJST0xFX1NVUFBMRU1FTlRBUllfT0ZGRVJTIiwiUk9MRV9BRE1JTiIsIlJPTEVfTE9ZQUxUWSIsIlJPTEVfUFJPVklTSU9OIiwiUk9MRV9DT05URU5UIiwiUk9MRV9QQVlNRU5UIiwiUk9MRV9UUkFOU0ZFUl9CQUxBTkNFIiwiUk9MRV9CQUxBTkNFX1FVRVJZIl0sImp0aSI6ImJkYjQ4NTgxLTYyOGQtNGI0YS1iODI1LTQ3NDJiY2RiNGZiOSIsImNsaWVudF9pZCI6Im1hdHRlbC1hcHAiLCJzY29wZSI6WyJyZWFkIiwiIHdyaXRlIl19.geOQXcUo6e5cCVwDepZk-91KmYmbIehPOcid0S5G3f2qMgMhvNVdKlrwxC09qLqqD-xv7TyWBDM3viiYTnClRUceUOg9aSDiv4lhbNgQIsvO-Fb27r2otZCKDWG5E-3c9-izOJcuSDR5y4YhNvc3V9suAFgruiQ1VYvT_b-3eYNwSJ-xiTF0F9nWK1awgkJ2zsJVP5WWtLXjQWfvw79GyRl5puMyLYBWL5g60qDXpTki1AW-Vf2iWvTMr5i3zYZqBvy1nd5tIAaqarITDnFvK4o1Q1hVjHRdrZMEfnLz2G24lyu2woU2PsuHGhTHW7ZxdxyH04oQKXpSTs3Gi07zkQ', 'menu', '0965678183', '', '', '', '', '', '1353711948', '946368375', 0, 'abuki25'),
+(4, 1069071373, 'en', '', 'log_pass', '', '', '', '', '', '', '', '906620199', 0, ''),
+(5, 477775192, 'am', 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTg1NDQxODMsInVzZXJfbmFtZSI6Ijk2NTY3ODE4MyIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUl9JTkZPX1VQREFURSIsIlJPTEVfUkVDSEFSR0UiLCJST0xFX1NVUFBMRU1FTlRBUllfT0ZGRVJTIiwiUk9MRV9BRE1JTiIsIlJPTEVfTE9ZQUxUWSIsIlJPTEVfUFJPVklTSU9OIiwiUk9MRV9DT05URU5UIiwiUk9MRV9QQVlNRU5UIiwiUk9MRV9UUkFOU0ZFUl9CQUxBTkNFIiwiUk9MRV9CQUxBTkNFX1FVRVJZIl0sImp0aSI6ImQ0YTIxYjgwLWZhZGMtNDhlOS1iOTdiLTE4ZGUyNDMwOWJlNyIsImNsaWVudF9pZCI6Im1hdHRlbC1hcHAiLCJzY29wZSI6WyJyZWFkIiwiIHdyaXRlIl19.FmMKQU0JhcmZGm7ONRUFPJJ_hCx9CxPu-2b8zK0MMX73CJ1UnPtSWwH5K9J9l609z8tomnBJc11aiv0xqg4gGBqHz2AOoHkOdVzQcCtR4D6Xz7HlBTswVNm2ZCYHGyNpghpWNqQTR1QLNb5wRevlT6jdvDMjrZp-QDtpWWeGVGBjsaRtoB-YirgR6EGPzVE83vK73v6mAGPhFunf6qQDDTi7tIZhsnDzaQ8ugcsgwtCFGc6AhqwbgvDzJ7hjibFRC5fRY6SutTUemShwd8QYScRxgWGlWVGoD5uQ3VNLoVbb7cZ05h3fHV-rqoLvdCifoST_77YPJSauSL2wZ0kH_g', 'offers', '0966668900', '', '', '', '', '', '1293609449', '965678183', 0, 'fuadhy'),
+(6, 308419931, 'en', '', 'pass', '', '', 'Leul', 'getnet', '', '', '', '978666619', 2506, 'lapriul'),
+(7, 397173471, 'en', '', 'log_pass', '', '', '', '', '', '', '', '944211763', 0, 'qpwoeirutyared'),
+(8, 1030074944, '', '', 'lang', '', '', '', '', '', '', '', '', 0, ''),
+(9, 1604435232, 'am', '', 'email', '', '', 'Tesfaye', 'belineh', '', '', '', '942511339', 6852, ''),
+(10, 1462148901, '', '', 'lang', '', '', '', '', '', '', '', '', 0, 'alphhhhaaaa'),
+(11, 707477254, '', '', 'lang', '', '', '', '', '', '', '', '', 0, 'one_true'),
+(12, 395858664, 'en', '', 'pass', '', '', 'yohannes', 'belete', '', '', '', '927423983', 3010, 'nunae14');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

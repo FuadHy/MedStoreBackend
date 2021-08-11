@@ -58,9 +58,14 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
 	// check if the email and the password are provided
 	const { email, password } = req.body
+	let user
 	if (!email || !password) return next(new AppError('Both name and password must be provided', 400))
 	// check if email and password are  in the database
-	let user = await User.findOne({where: { email }});
+	if(req.body.admin){
+		user = await User.findOne({where: { email, role:'admin' }});
+	} else {
+		user = await User.findOne({where: { email }});
+	}
 	if (!user || !(bcrypt.compareSync(password, user.password))){
 		return next(new AppError('Email or password is incorrect', 401))
 	}
